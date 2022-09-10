@@ -1,11 +1,12 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:dalili_app/src/utils/constants.dart';
+import './src/utils/constants.dart';
 import 'package:flutter/services.dart';
 
 import './src/widgets/global/main_bar.dart';
 import './src/widgets/home/classifications.dart';
+import './src/widgets/home/products_slides.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(
@@ -73,6 +74,7 @@ class _MyHomePageState extends State<MyHomePage> {
             padding: const EdgeInsets.all(0),
             children: [
               Classifications(),
+              ProductsSlides(),
             ],
           ),
         )
