@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-const BASE_API = 'https://dalilisy.herokuapp.com';
+const BASE_API_HTTPS = 'dalilisy.herokuapp.com';
 
 const APPLICATION_JSON = 'application/json';
 

@@ -1,16 +1,19 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import './src/utils/constants.dart';
 import 'package:flutter/services.dart';
 
+import './src/utils/constants.dart';
+import './src/widgets/home/wide_slides.dart';
 import './src/widgets/global/main_bar.dart';
 import './src/widgets/home/classifications.dart';
 import './src/widgets/home/products_slides.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(
-    SystemUiOverlayStyle(statusBarColor: Colors.transparent),
+    SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+    ),
   );
   runApp(const MyApp());
 }
@@ -75,6 +78,7 @@ class _MyHomePageState extends State<MyHomePage> {
             children: [
               Classifications(),
               ProductsSlides(),
+              WideSlides(),
             ],
           ),
         )

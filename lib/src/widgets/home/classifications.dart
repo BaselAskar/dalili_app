@@ -9,6 +9,8 @@ class Classifications extends StatefulWidget {
 }
 
 class _ClassificationsState extends State<Classifications> {
+  bool _isIntialed = false;
+
   var _classifications = [];
 
   bool _isShowList = false;
@@ -16,16 +18,24 @@ class _ClassificationsState extends State<Classifications> {
   HttpRequest getClassifications =
       HttpRequest(url: '/api/public/classifications');
 
-  @override
-  void initState() {
-    classification();
-    super.initState();
-  }
-
   void classification() async {
     var data = await getClassifications.sendRequest();
 
     _classifications = data;
+  }
+
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    if (!_isIntialed) {
+      getClassifications.sendRequest().then((data) {
+        setState(() {
+          _classifications = data;
+          _isIntialed = true;
+        });
+      }).catchError((err) => print(err['message']));
+    }
+    super.didChangeDependencies();
   }
 
   @override
@@ -39,7 +49,11 @@ class _ClassificationsState extends State<Classifications> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: const [Icon(Icons.menu), Text('  الأقسام')]),
         ),
-        children: _classifications.map((cl) => ClassesListItem(cl)).toList(),
+        children: _classifications
+            .map(
+              (cl) => buildClassificationListItem(cl),
+            )
+            .toList(),
       ),
     );
   }

@@ -1,3 +1,4 @@
+import 'package:dalili_app/src/utils/constants.dart';
 import 'package:flutter/material.dart';
 
 import '../../utils/http_request.dart';
@@ -8,23 +9,24 @@ class ProductsSlides extends StatefulWidget {
 }
 
 class _ProductsSlidesState extends State<ProductsSlides> {
+  bool _isIntialed = false;
+
   List _productsSlides = [];
 
   HttpRequest getProductsSlides =
       HttpRequest(url: '/api/public/productsSlides');
 
-  void _setProductsSlides() async {
-    var data = await getProductsSlides.sendRequest();
-    setState(() {
-      _productsSlides = data;
-    });
-  }
-
   @override
-  void initState() {
-    _setProductsSlides();
-
-    super.initState();
+  void didChangeDependencies() {
+    if (!_isIntialed) {
+      getProductsSlides.sendRequest().then((data) {
+        setState(() {
+          _productsSlides = data;
+          _isIntialed = true;
+        });
+      }).catchError((err) => print(err['message']));
+    }
+    super.didChangeDependencies();
   }
 
   @override
@@ -52,32 +54,52 @@ class _ProductsSlidesState extends State<ProductsSlides> {
                 padding: const EdgeInsets.all(10),
                 width: MediaQuery.of(context).size.width / 2,
                 child: Column(children: [
-                  Container(
-                    height: 150,
-                    child: Image.network(
-                      product['photoUrl'],
-                      fit: BoxFit.fill,
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: Container(
+                      height: 150,
+                      child: Image.network(
+                        product['photoUrl'],
+                        fit: BoxFit.fill,
+                      ),
                     ),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Flexible(
-                        child: Text(
-                          '${(product['currency'] as String).substring(0, (product['currency'] as String).indexOf(' '))} ${product['price']}',
-                          style: const TextStyle(
-                            color: Color.fromARGB(255, 190, 53, 3),
-                            fontWeight: FontWeight.bold,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 5),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Flexible(
+                          child: Text(
+                            '${(product['currency'] as String).substring(0, (product['currency'] as String).indexOf(' '))} ${product['price']}',
+                            style: const TextStyle(
+                              color: Color.fromARGB(255, 190, 53, 3),
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
-                      ),
-                      Flexible(
-                        child: Text(
-                          product['name'],
-                        ),
-                      )
-                    ],
+                        Directionality(
+                          textDirection: TextDirection.rtl,
+                          child: Flexible(
+                            child: Text(
+                              (product['name'] as String).length > 12
+                                  ? (product['name'] as String).substring(0, 12)
+                                  : product['name'],
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
                   ),
+                  Center(
+                    child: Text(
+                      product['store']['name'],
+                      style: const TextStyle(
+                        color: AppColors.primary,
+                        fontSize: 18,
+                      ),
+                    ),
+                  )
                 ]),
               );
             }).toList(),

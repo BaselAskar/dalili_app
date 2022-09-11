@@ -19,7 +19,9 @@ class HttpRequest {
   });
 
   Future sendRequest() async {
-    var uriArg = Uri.parse(BASE_API + url);
+    // var uriArg = Uri.parse(BASE_API + url);
+
+    var uriArg = Uri.https(BASE_API_HTTPS, url);
 
     Map<String, String> headerArg =
         contentType != null ? {'Content-Type': contentType as String} : {};
