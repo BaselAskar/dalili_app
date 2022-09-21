@@ -41,7 +41,7 @@ Widget buildClassificationListItem(classification) {
         .map((sec) => Container(
               margin: const EdgeInsets.all(8),
               child: Center(
-                  child: ElevatedButton(
+                  child: TextButton(
                 onPressed: () {},
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),

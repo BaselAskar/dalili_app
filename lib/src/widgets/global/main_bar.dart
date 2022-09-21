@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:hexcolor/hexcolor.dart';
 
 import '../../utils/constants.dart';
 
 class MainBar extends StatefulWidget {
-  final GlobalKey<ScaffoldState>? _key;
+  final GlobalKey<ScaffoldState>? scaffoldKey;
 
-  MainBar(this._key);
+  MainBar({this.scaffoldKey = null});
 
   @override
   State<MainBar> createState() => _MainBarState();
@@ -28,21 +27,29 @@ class _MainBarState extends State<MainBar> {
       ),
       child: Container(
         margin: EdgeInsets.only(top: statusBar),
-        child:
-            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-          Container(
-            height: 40,
-            child: Image.asset('assets/images/logo.png'),
-          ),
-          IconButton(
-            onPressed: () {
-              widget._key?.currentState?.openEndDrawer();
-            },
-            icon: const Icon(
-              Icons.account_box,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Container(
+              height: 40,
+              child: Image.asset('assets/images/logo.png'),
             ),
-          )
-        ]),
+            if (widget.scaffoldKey != null)
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: 20),
+                child: IconButton(
+                  onPressed: () {
+                    widget.scaffoldKey?.currentState?.openEndDrawer();
+                  },
+                  icon: const Icon(
+                    Icons.account_box_rounded,
+                    color: Colors.blueGrey,
+                    size: 30,
+                  ),
+                ),
+              )
+          ],
+        ),
       ),
     );
   }

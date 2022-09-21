@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
 import '../../utils/http_request.dart';
+import '../../screens/store_screen.dart';
 
 class WideSlides extends StatefulWidget {
   @override
@@ -9,56 +10,103 @@ class WideSlides extends StatefulWidget {
 }
 
 class _WideSlidesState extends State<WideSlides> {
-  bool _isInitialed = false;
-  List _wideSlides = [];
-
   HttpRequest getWideSlides = HttpRequest(url: '/api/public/wideSlides');
-
-  void _setWideSlides() async {
-    var data = await getWideSlides.sendRequest();
-    print(data);
-    setState(() {
-      _wideSlides = data;
-      _isInitialed = true;
-    });
-  }
-
-  @override
-  void didChangeDependencies() {
-    if (!_isInitialed) {
-      _setWideSlides();
-    }
-
-    super.didChangeDependencies();
-  }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: _wideSlides.map((wideSlide) {
-        return Container(
-          margin: const EdgeInsets.symmetric(vertical: 20),
-          child: (wideSlide['photos'] as List).length > 1
-              ? CarouselSlider(
-                  options: CarouselOptions(
-                    height: 150,
-                    autoPlay: true,
-                    autoPlayAnimationDuration: Duration(
-                      seconds: wideSlide['speed'],
-                    ),
-                    viewportFraction: 1.0,
+    void _goToStore(String storeId) {
+      Navigator.of(context).pushNamed(StoreScreen.path, arguments: storeId);
+    }
+
+    return FutureBuilder(
+      future: getWideSlides.sendRequest(),
+      builder: (BuildContext ctx, AsyncSnapshot snapshot) {
+        if (snapshot.hasData) {
+          return Column(
+            children: (snapshot.data as List).map((wideSlide) {
+              return Container(
+                margin: const EdgeInsets.symmetric(vertical: 20),
+                child: (wideSlide['photos'] as List).length > 1
+                    ? CarouselSlider(
+                        options: CarouselOptions(
+                          height: 150,
+                          autoPlay: true,
+                          autoPlayAnimationDuration: Duration(
+                            seconds: wideSlide['speed'],
+                          ),
+                          viewportFraction: 1.0,
+                        ),
+                        items: (wideSlide['photos'] as List).map((photo) {
+                          return GestureDetector(
+                            onTap: () => _goToStore(photo['store']['id']),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(12),
+                              child: Image.network(
+                                photo['url'],
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          );
+                        }).toList(),
+                      )
+                    : GestureDetector(
+                        onTap: () =>
+                            _goToStore(wideSlide['photos'][0]['store']['id']),
+                        child: Container(
+                          height: 150,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(12),
+                            child: Image.network(wideSlide['photos'][0]['url'],
+                                fit: BoxFit.cover),
+                          ),
+                        ),
+                      ),
+              );
+            }).toList(),
+          );
+        }
+        return Container();
+      },
+    );
+  }
+}
+
+Widget buildWideSlides(BuildContext context, List wideSlidesData) {
+  void _goToStore(String storeId) {
+    print(storeId);
+    Navigator.of(context).pushNamed(StoreScreen.path, arguments: storeId);
+  }
+
+  return Column(
+    children: wideSlidesData.map((wideSlide) {
+      return Container(
+        margin: const EdgeInsets.symmetric(vertical: 20),
+        child: (wideSlide['photos'] as List).length > 1
+            ? CarouselSlider(
+                options: CarouselOptions(
+                  height: 150,
+                  autoPlay: true,
+                  autoPlayAnimationDuration: Duration(
+                    seconds: wideSlide['speed'],
                   ),
-                  items: (wideSlide['photos'] as List).map((photo) {
-                    return ClipRRect(
+                  viewportFraction: 1.0,
+                ),
+                items: (wideSlide['photos'] as List).map((photo) {
+                  return GestureDetector(
+                    onTap: () => _goToStore(photo['store']['id']),
+                    child: ClipRRect(
                       borderRadius: BorderRadius.circular(12),
                       child: Image.network(
                         photo['url'],
                         fit: BoxFit.cover,
                       ),
-                    );
-                  }).toList(),
-                )
-              : Container(
+                    ),
+                  );
+                }).toList(),
+              )
+            : GestureDetector(
+                onTap: () => _goToStore(wideSlide['photos'][0]['store']['id']),
+                child: Container(
                   height: 150,
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(12),
@@ -66,8 +114,8 @@ class _WideSlidesState extends State<WideSlides> {
                         fit: BoxFit.cover),
                   ),
                 ),
-        );
-      }).toList(),
-    );
-  }
+              ),
+      );
+    }).toList(),
+  );
 }
