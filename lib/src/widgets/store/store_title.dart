@@ -22,7 +22,7 @@ Widget buildStoreTitle({
       children: [
         Center(
           child: Container(
-            width: widthPercent(context, 90),
+            width: widthPercent(context, 0.9),
             height: 150,
             decoration: BoxDecoration(boxShadow: [
               BoxShadow(

@@ -90,6 +90,7 @@ Widget buildWideSlides(BuildContext context, List wideSlidesData) {
                     seconds: wideSlide['speed'],
                   ),
                   viewportFraction: 1.0,
+                  aspectRatio: 1,
                 ),
                 items: (wideSlide['photos'] as List).map((photo) {
                   return GestureDetector(

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../global/average_starts.dart';
+
 class AverageStars extends StatelessWidget {
   final double starsSize;
   final double averageRating;
@@ -16,8 +18,6 @@ class AverageStars extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(_starPercent);
-
     List<Widget> starsList = List.generate(5, (index) {
       if (index < _numOffillStars) {
         return Icon(Icons.star, color: Colors.yellow, size: starsSize);
@@ -53,7 +53,7 @@ class AverageStars extends StatelessWidget {
                   color: Color.fromARGB(255, 196, 176, 3),
                   fontWeight: FontWeight.bold),
             ),
-          )
+          ),
         ],
       ),
     );

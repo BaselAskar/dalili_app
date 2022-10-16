@@ -18,7 +18,7 @@ class _MainBarState extends State<MainBar> {
 
     return Container(
       width: double.infinity,
-      height: statusBar + 70,
+      height: statusBar + Dimentions.mainBarHeight,
       decoration: const BoxDecoration(
         gradient: LinearGradient(
             colors: [AppColors.primary, AppColors.primary75],
@@ -28,10 +28,12 @@ class _MainBarState extends State<MainBar> {
       child: Container(
         margin: EdgeInsets.only(top: statusBar),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: widget.scaffoldKey != null
+              ? MainAxisAlignment.spaceBetween
+              : MainAxisAlignment.center,
           children: [
             Container(
-              height: 40,
+              height: Dimentions.logoHeight,
               child: Image.asset('assets/images/logo.png'),
             ),
             if (widget.scaffoldKey != null)

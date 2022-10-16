@@ -47,12 +47,6 @@ class _StoreScreenState extends State<StoreScreen> {
 
     double viewInsetsBottom = MediaQuery.of(context).viewInsets.bottom;
 
-    double bodyHeight = sccrenHeight -
-        screenPadding.top -
-        screenPadding.bottom -
-        viewInsetsBottom -
-        120;
-
     return Scaffold(
       body: Column(children: [
         MainBar(),
@@ -60,7 +54,7 @@ class _StoreScreenState extends State<StoreScreen> {
           headerText: 'المتجر',
         ),
         Container(
-          height: bodyHeight,
+          height: bodyHeight(context, headerHeight: 120),
           child: FutureBuilder(
             future: _getData(id: storeId),
             builder: (BuildContext context, AsyncSnapshot snapshot) {

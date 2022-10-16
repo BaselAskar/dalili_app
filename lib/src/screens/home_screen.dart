@@ -10,6 +10,8 @@ import '../widgets/home/small_slides.dart';
 import '../widgets/home/wide_slides.dart';
 
 class HomeScreen extends StatefulWidget {
+  static const String path = '/';
+
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }

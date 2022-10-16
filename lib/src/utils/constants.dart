@@ -4,6 +4,12 @@ const BASE_API_HTTPS = 'https://dalilisy.herokuapp.com';
 
 const APPLICATION_JSON = 'application/json';
 
+class Dimentions {
+  static const double mainBarHeight = 70;
+  static const double headerHeight = 50;
+  static const double logoHeight = 40;
+}
+
 class AppColors {
   static const primary = Color.fromARGB(255, 26, 143, 221);
   static const primary75 = Color.fromRGBO(218, 240, 254, 1);

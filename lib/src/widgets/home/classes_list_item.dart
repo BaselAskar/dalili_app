@@ -1,54 +1,56 @@
+import 'package:dalili_app/src/utils/constants.dart';
 import 'package:flutter/material.dart';
 
-// class ClassesListItem extends StatelessWidget {
-//   final _classification;
+import '../../utils/dimentions_utils.dart';
 
-//   bool isShowListClassifications = false;
+class ClassificationListItem extends StatefulWidget {
+  final Map<String, dynamic> _classification;
 
-//   ClassesListItem(this._classification);
+  ClassificationListItem(this._classification);
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return ExpansionTile(
-//       title: Text(
-//         _classification['title'],
-//         style: const TextStyle(fontWeight: FontWeight.bold),
-//       ),
-//       children: (_classification['sections'] as List)
-//           .map((sec) => Container(
-//                 margin: const EdgeInsets.all(8),
-//                 child: Center(
-//                     child: ElevatedButton(
-//                   onPressed: () {},
-//                   child: Padding(
-//                     padding: const EdgeInsets.all(8.0),
-//                     child: Text(sec['name']),
-//                   ),
-//                 )),
-//               ))
-//           .toList(),
-//     );
-//   }
-// }
+  @override
+  State<ClassificationListItem> createState() => _ClassificationListItemState();
+}
 
-Widget buildClassificationListItem(classification) {
-  return ExpansionTile(
-    title: Text(
-      classification['title'],
-      style: const TextStyle(fontWeight: FontWeight.bold),
-    ),
-    children: (classification['sections'] as List)
-        .map((sec) => Container(
-              margin: const EdgeInsets.all(8),
-              child: Center(
-                  child: TextButton(
-                onPressed: () {},
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(sec['name']),
+class _ClassificationListItemState extends State<ClassificationListItem> {
+  bool _showList = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        DropdownButton(
+          dropdownColor: AppColors.primary75,
+          iconSize: 0,
+          underline: Container(),
+          alignment: Alignment.center,
+          value: widget._classification['title'],
+          items: [
+            DropdownMenuItem(
+              child: InkWell(
+                enableFeedback: true,
+                child: Text(
+                  widget._classification['title'],
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontWeight: FontWeight.bold),
                 ),
-              )),
-            ))
-        .toList(),
-  );
+              ),
+              value: widget._classification['title'],
+              enabled: false,
+            ),
+            ...((widget._classification['sections'] as List)
+                .map((sec) => DropdownMenuItem(
+                      child: Text(sec['name']),
+                      value: sec['name'],
+                    ))
+                .toList())
+          ],
+          onChanged: (value) {
+            print(value);
+          },
+        ),
+      ],
+    );
+  }
 }

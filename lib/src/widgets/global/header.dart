@@ -1,5 +1,6 @@
-import 'package:dalili_app/src/utils/constants.dart';
 import 'package:flutter/material.dart';
+
+import '../../utils/constants.dart';
 
 class Header extends StatelessWidget {
   final String headerText;
@@ -16,7 +17,7 @@ class Header extends StatelessWidget {
 
     return Container(
       color: AppColors.primary75,
-      height: 50,
+      height: Dimentions.headerHeight,
       child: Row(
         children: [
           Container(
