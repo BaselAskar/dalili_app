@@ -1,5 +1,7 @@
+import 'package:dalili_app/src/providers/http_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 import './src/screens/home_screen.dart';
 import './src/screens/store_screen.dart';
@@ -21,19 +23,24 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Dalili',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return MultiProvider(
+      providers: [
+        Provider<HttpProvider>(create: (_) => HttpProvider()),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Dalili',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        initialRoute: '/',
+        routes: {
+          HomeScreen.path: (context) => HomeScreen(),
+          StoreScreen.path: (context) => StoreScreen(),
+          ProductScreen.path: (context) => ProductScreen(),
+          PhotoViewScreen.path: (context) => PhotoViewScreen(),
+        },
       ),
-      initialRoute: '/',
-      routes: {
-        HomeScreen.path: (context) => HomeScreen(),
-        StoreScreen.path: (context) => StoreScreen(),
-        ProductScreen.path: (context) => ProductScreen(),
-        PhotoViewScreen.path: (context) => PhotoViewScreen(),
-      },
     );
   }
 }
