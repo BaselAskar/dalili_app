@@ -1,7 +1,35 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.dalili_app">
+
+    <queries>
+        <intent>
+          <action android:name="android.intent.action.VIEW" />
+          <data android:scheme="https" />
+        </intent>
+
+        <intent>
+          <action android:name="android.intent.action.VIEW" />
+          <data android:scheme="http" />
+        </intent>
+
+        <!-- If your app checks for SMS support -->
+        <intent>
+          <action android:name="android.intent.action.VIEW" />
+          <data android:scheme="sms" />
+        </intent>
+        <!-- If your app checks for call support -->
+        <intent>
+          <action android:name="android.intent.action.VIEW" />
+          <data android:scheme="tel" />
+        </intent>
+    </queries>
+
+
+
+
    <application
         android:label="Dalili"
+        android:usesCleartextTraffic="true"
         android:name="${applicationName}"
         android:icon="@mipmap/logo">
         <activity

@@ -4,10 +4,10 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import './src/screens/home_screen.dart';
+import './src/screens/search_section_screen.dart';
 import './src/screens/store_screen.dart';
 import './src/screens/product_screen.dart';
 import './src/screens/photo_view_screen.dart';
-import './src/screens/home_screen.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(
@@ -36,6 +36,7 @@ class MyApp extends StatelessWidget {
         initialRoute: '/',
         routes: {
           HomeScreen.path: (context) => HomeScreen(),
+          SearchSection.path: (context) => SearchSection(),
           StoreScreen.path: (context) => StoreScreen(),
           ProductScreen.path: (context) => ProductScreen(),
           PhotoViewScreen.path: (context) => PhotoViewScreen(),

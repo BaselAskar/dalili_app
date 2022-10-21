@@ -8,6 +8,7 @@ class Dimentions {
   static const double mainBarHeight = 70;
   static const double headerHeight = 50;
   static const double logoHeight = 40;
+  static const double mainAndHeaderHeight = mainBarHeight + headerHeight;
 }
 
 class AppColors {
