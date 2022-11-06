@@ -50,7 +50,7 @@ class HttpRequest {
       queryUrl = queryUrl.substring(0, (queryUrl.length - 1));
     }
 
-    var uriArg = Uri.parse(BASE_API_HTTPS + url + pathForUrl + queryUrl);
+    var uriArg = Uri.parse(BASE_API + url + pathForUrl + queryUrl);
 
     Map<String, String> headerArg =
         contentType != null ? {'Content-Type': contentType as String} : {};
@@ -77,9 +77,12 @@ class HttpRequest {
         break;
     }
 
-    if (_response?.statusCode != 200)
-      throw Exception(jsonDecode(_response!.body));
+    if (_response?.statusCode as int >= 400) throw jsonDecode(_response!.body);
 
-    return jsonDecode(_response!.body);
+    try {
+      return jsonDecode(_response!.body);
+    } catch (ex) {
+      throw 'error Request';
+    }
   }
 }

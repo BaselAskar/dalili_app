@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class CutomeFutureBuilder extends StatefulWidget {
+class CustomeFutureBuilder extends StatefulWidget {
   final Future<dynamic>? future;
   final Widget Function(dynamic data) successBuilder;
   final Widget? Function(dynamic error)? errorBuilder;
   final Widget? loadingBuilder;
 
-  CutomeFutureBuilder({
+  CustomeFutureBuilder({
     this.future,
     required this.successBuilder,
     this.errorBuilder,
@@ -14,10 +14,10 @@ class CutomeFutureBuilder extends StatefulWidget {
   });
 
   @override
-  State<CutomeFutureBuilder> createState() => _CutomeFutureBuilderState();
+  State<CustomeFutureBuilder> createState() => _CustomeFutureBuilderState();
 }
 
-class _CutomeFutureBuilderState extends State<CutomeFutureBuilder> {
+class _CustomeFutureBuilderState extends State<CustomeFutureBuilder> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(

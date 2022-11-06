@@ -10,8 +10,6 @@ import '../utils/dimentions_utils.dart' as dym;
 import '../widgets/global/custome_futuer_builder.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-import '../screens/search_section_screen.dart';
-
 class SearchSection extends StatefulWidget {
   static const String path = '/search-section-screen';
 
@@ -31,7 +29,7 @@ class _SearchSectionState extends State<SearchSection> {
       'title': title,
       'name': name,
       'pageNumber': '1',
-      'PageSize': '9',
+      'PageSize': '10',
     });
 
     var citiesData = await getCities.sendRequest();
@@ -54,16 +52,29 @@ class _SearchSectionState extends State<SearchSection> {
           Container(
             height: dym.bodyHeight(context,
                 headerHeight: Dimentions.mainAndHeaderHeight),
-            child: CutomeFutureBuilder(
+            child: CustomeFutureBuilder(
               future: getSearchSectionRequest(
                   params['title'] as String, params['section'] as String),
               loadingBuilder: Center(
-                child: SpinKitCircle(color: AppColors.primary, size: 30),
+                child: SpinKitCircle(color: AppColors.primary, size: 40),
               ),
               successBuilder: (data) {
                 return ListView(
-                  padding: const EdgeInsets.all(0),
+                  padding: const EdgeInsets.only(top: 10),
                   children: [
+                    Center(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 5),
+                        child: Text(
+                          '${params['title']} - ${params['section']}',
+                          style: TextStyle(
+                            color: AppColors.primary,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
                     CitiesFilter(data['cities']),
                     Container(
                       child: Column(

@@ -34,7 +34,10 @@ class _PaginationState extends State<Pagination> {
   void didChangeDependencies() {
     if (!_initail) {
       setState(() {
-        listItems = List<Widget>.generate(widget.pageSize,
+        listItems = List<Widget>.generate(
+            widget.numberOfPages > 1
+                ? widget.pageSize
+                : widget.initialList.length,
             (index) => widget.itemsBuilder(context, widget.initialList, index));
         _initail = true;
       });

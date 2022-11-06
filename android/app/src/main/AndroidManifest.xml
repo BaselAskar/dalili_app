@@ -26,8 +26,8 @@
 
 
 
-
-   <application
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <application
         android:label="Dalili"
         android:usesCleartextTraffic="true"
         android:name="${applicationName}"

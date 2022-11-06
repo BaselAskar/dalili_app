@@ -13,13 +13,15 @@ class StoreCard extends StatelessWidget {
 
   StoreCard(this.store);
 
-  Future<void> _launchUrl() async {
-    String url = 'https://wa.me/${(store['whatsapp1'] as String).substring(2)}';
+  Future<void> _launchUrl(String url) async {
+    try {
+      var successReq =
+          await launchUrlString(url, mode: LaunchMode.externalApplication);
 
-    var successReq =
-        await launchUrlString(url, mode: LaunchMode.externalApplication);
-
-    if (!successReq) throw new Exception('faild to open');
+      if (!successReq) throw new Exception('faild to open');
+    } catch (ex) {
+      print(ex);
+    }
   }
 
   void _goToStore(BuildContext context, String storeId) {
@@ -121,7 +123,8 @@ class StoreCard extends StatelessWidget {
                   ),
                 ),
                 IconButton(
-                  onPressed: () => _launchUrl(),
+                  onPressed: () => _launchUrl(
+                      'https://wa.me/${(store['whatsapp1'] as String).substring(2)}'),
                   icon: Icon(Icons.whatsapp),
                   color: Colors.green,
                 ),
@@ -147,18 +150,44 @@ class StoreCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                IconButton(
+                TextButton(
                     onPressed: () => _goToStore(context, store['id']),
-                    icon: Icon(
-                      Icons.store,
-                      color: AppColors.primary,
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.store,
+                          color: AppColors.primary,
+                          size: 40,
+                        ),
+                        const Text(
+                          'إلى المتجر',
+                          style: TextStyle(
+                            fontSize: 15,
+                            color: AppColors.primary,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        )
+                      ],
                     )),
-                IconButton(
-                    onPressed: () {},
-                    icon: Icon(
-                      Icons.map,
-                      color: AppColors.primary,
-                    )),
+                TextButton(
+                  onPressed: () => _launchUrl(store['locationUrl']),
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.pin_drop,
+                        size: 40,
+                        color: AppColors.primary,
+                      ),
+                      const Text(
+                        'إلى الخرائط',
+                        style: TextStyle(
+                            fontSize: 15,
+                            color: AppColors.primary,
+                            fontWeight: FontWeight.bold),
+                      )
+                    ],
+                  ),
+                )
               ],
             ),
           ],

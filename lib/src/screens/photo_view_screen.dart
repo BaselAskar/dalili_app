@@ -13,8 +13,11 @@ class PhotoViewScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: AppColors.primary,
       ),
-      body: PhotoView(
-        imageProvider: NetworkImage(_imgUrl),
+      body: Hero(
+        tag: _imgUrl,
+        child: PhotoView(
+          imageProvider: NetworkImage(_imgUrl),
+        ),
       ),
     );
   }

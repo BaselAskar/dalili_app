@@ -4,12 +4,11 @@ import 'package:carousel_slider/carousel_slider.dart';
 import '../../utils/http_request.dart';
 import '../../screens/store_screen.dart';
 
-class WideSlides extends StatefulWidget {
-  @override
-  State<WideSlides> createState() => _WideSlidesState();
-}
+class WideSlides extends StatelessWidget {
+  final List wideSlidesData;
 
-class _WideSlidesState extends State<WideSlides> {
+  WideSlides(this.wideSlidesData);
+
   HttpRequest getWideSlides = HttpRequest(url: '/api/public/wideSlides');
 
   @override

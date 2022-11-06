@@ -52,9 +52,12 @@ class _ProductImagesState extends State<ProductImages> {
             borderRadius: BorderRadius.circular(12),
             child: GestureDetector(
               onTap: () => goToPhotoView(_wildImageUrl),
-              child: Image.network(
-                _wildImageUrl,
-                fit: BoxFit.contain,
+              child: Hero(
+                tag: _wildImageUrl,
+                child: Image.network(
+                  _wildImageUrl,
+                  fit: BoxFit.contain,
+                ),
               ),
             ),
           ),

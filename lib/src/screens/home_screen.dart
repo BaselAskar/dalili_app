@@ -9,15 +9,8 @@ import '../widgets/home/products_slides.dart';
 import '../widgets/home/small_slides.dart';
 import '../widgets/home/wide_slides.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   static const String path = '/';
-
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  List<Widget> _content = [];
 
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -65,40 +58,51 @@ class _HomeScreenState extends State<HomeScreen> {
           )
         ],
       )),
-      body: Column(children: [
-        MainBar(
-          scaffoldKey: _scaffoldKey,
-        ),
-        Container(
-          height: bodyHeight,
-          child: FutureBuilder(
-            future: _getData(),
-            builder: (BuildContext context, AsyncSnapshot snapshot) {
-              if (snapshot.hasData) {
-                _content = [
-                  buildProductSlides(context, snapshot.data['productsSlides']),
-                  buildWideSlides(context, snapshot.data['wideSlides']),
-                  buildSmallSlides(context, snapshot.data['smallSlides'])
-                ];
+      body: Column(
+        children: [
+          MainBar(
+            scaffoldKey: _scaffoldKey,
+          ),
+          Container(
+            height: bodyHeight,
+            child: FutureBuilder(
+              future: _getData(),
+              builder: (BuildContext context, AsyncSnapshot snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Expanded(
+                    child: Center(
+                      child: SpinKitDualRing(color: AppColors.primary),
+                    ),
+                  );
+                }
 
-                return ListView(
-                  padding: const EdgeInsets.all(0),
-                  children: [
-                    Classifications(),
-                    ..._content,
+                if (snapshot.hasData) {
+                  return ListView(
+                    padding: const EdgeInsets.all(0),
+                    children: [
+                      Classifications(),
+                      ProductsSlides(snapshot.data['productsSlides']),
+                      WideSlides(snapshot.data['wideSlides']),
+                      SmallSlides(snapshot.data['smallSlides'])
+                    ],
+                  );
+                }
+
+                return AlertDialog(
+                  title: Text('Error'),
+                  content: Text('error message' as String),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                      child: Text('Ok'),
+                    )
                   ],
                 );
-              }
-
-              return Expanded(
-                child: Center(
-                  child: SpinKitDualRing(color: AppColors.primary),
-                ),
-              );
-            },
-          ),
-        )
-      ]),
+              },
+            ),
+          )
+        ],
+      ),
     );
   }
 }

@@ -1,9 +1,11 @@
+import 'package:dalili_app/src/utils/constants.dart';
 import 'package:flutter/material.dart';
 
 class DropdownList extends StatefulWidget {
   final List<String> listItems;
+  final void Function(String? classification) filterProduct;
 
-  DropdownList({required this.listItems});
+  DropdownList({required this.listItems, required this.filterProduct});
 
   @override
   State<DropdownList> createState() => _DropdownListState();
@@ -19,6 +21,8 @@ class _DropdownListState extends State<DropdownList> {
   }
 
   void _onChageValue(String? value) {
+    widget.filterProduct(value);
+
     setState(() {
       dropdownValue = value;
     });
@@ -27,6 +31,11 @@ class _DropdownListState extends State<DropdownList> {
   @override
   Widget build(BuildContext context) {
     return DropdownButton(
+      underline: Container(
+        height: 1,
+        color: AppColors.primary,
+      ),
+      iconEnabledColor: AppColors.primary,
       alignment: Alignment.center,
       value: dropdownValue,
       items: widget.listItems.map((item) {

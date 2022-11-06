@@ -51,7 +51,7 @@ class HttpProvider with ChangeNotifier {
     notifyListeners();
 
     try {
-      String uriPath = BASE_API_HTTPS + (url as String);
+      String uriPath = BASE_API + (url as String);
 
       switch (method) {
         case Methods.get:
