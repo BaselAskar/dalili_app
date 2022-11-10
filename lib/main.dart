@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
         initialRoute: '/',
         routes: {
           HomeScreen.path: (context) => HomeScreen(),
-          SearchSection.path: (context) => SearchSection(),
+          SearchSectionScreen.path: (context) => SearchSectionScreen(),
           StoreScreen.path: (context) => StoreScreen(),
           ProductScreen.path: (context) => ProductScreen(),
           PhotoViewScreen.path: (context) => PhotoViewScreen(),

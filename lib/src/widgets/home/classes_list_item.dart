@@ -16,7 +16,7 @@ class _ClassificationListItemState extends State<ClassificationListItem> {
   bool _showList = false;
 
   void _goToSeachSection(BuildContext context, String title, String section) {
-    Navigator.of(context).pushNamed(SearchSection.path,
+    Navigator.of(context).pushNamed(SearchSectionScreen.path,
         arguments: {'title': title, 'section': section});
   }
 
