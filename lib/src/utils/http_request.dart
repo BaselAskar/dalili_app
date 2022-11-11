@@ -9,13 +9,15 @@ class HttpRequest {
   final String url;
   final Methods method;
   final String? contentType;
-  final Object? body;
+  // final Object? body;
+  final bool auth;
 
   HttpRequest({
     required this.url,
     this.method = Methods.get,
     this.contentType,
-    this.body,
+    // this.body,
+    this.auth = false,
   });
 
   http.Response? _response;
@@ -25,6 +27,7 @@ class HttpRequest {
   }
 
   Future sendRequest({
+    Object? body,
     List<String>? pathParams,
     Map<String, String>? query,
   }) async {

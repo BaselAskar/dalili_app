@@ -107,21 +107,27 @@ class StoreCard extends StatelessWidget {
             ),
             Row(
               children: [
-                const Text(
-                  'العنوان: ',
-                  style: TextStyle(
-                    color: AppColors.storeTitle,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
+                Align(
+                  alignment: Alignment.topRight,
+                  child: const Text(
+                    'العنوان: ',
+                    style: TextStyle(
+                      color: AppColors.storeTitle,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
                   ),
                 ),
                 SizedBox(
                   width: 3,
                 ),
-                Text(
-                  store['address'],
-                  style: TextStyle(
-                    fontSize: 16,
+                Expanded(
+                  child: Text(
+                    store['address'],
+                    softWrap: true,
+                    style: TextStyle(
+                      fontSize: 16,
+                    ),
                   ),
                 ),
               ],

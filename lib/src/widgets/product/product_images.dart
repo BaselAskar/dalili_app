@@ -64,14 +64,14 @@ class _ProductImagesState extends State<ProductImages> {
         ),
         Container(
           padding: const EdgeInsets.symmetric(vertical: 15),
-          width: maxWidthFormPreInPixel(context, 1, 470),
+          width: maxWidthFormPreInPixel(context, 0.9, 470),
           child: LayoutBuilder(
             builder: (BuildContext context, BoxConstraints constraints) => Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: _imagesUrl.map((photo) {
                 return Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 5),
-                  width: constraints.maxWidth * 0.2,
+                  margin: const EdgeInsets.symmetric(horizontal: 5),
+                  width: constraints.maxWidth * 0.17,
                   decoration: photo == _wildImageUrl
                       ? BoxDecoration(
                           border: Border.all(color: AppColors.primary),
@@ -79,7 +79,7 @@ class _ProductImagesState extends State<ProductImages> {
                         )
                       : BoxDecoration(),
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(10),
                     child: GestureDetector(
                       onTap: () => _viewImage(photo),
                       child: Image.network(

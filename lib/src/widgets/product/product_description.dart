@@ -11,7 +11,8 @@ class ProductDescription extends StatelessWidget {
       padding: const EdgeInsets.all(10),
       child: Text(
         _description,
-        textAlign: TextAlign.end,
+        textAlign: TextAlign.start,
+        textDirection: TextDirection.rtl,
       ),
     );
   }

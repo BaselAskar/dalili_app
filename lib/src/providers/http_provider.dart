@@ -75,7 +75,7 @@ class HttpProvider with ChangeNotifier {
 
       Map<String, dynamic> data = jsonDecode(response!.body);
 
-      applyData!(data);
+      applyData!(data, response);
     } catch (error) {
       applyError!(error);
     } finally {

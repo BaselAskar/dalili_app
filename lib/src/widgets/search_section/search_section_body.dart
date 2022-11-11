@@ -1,21 +1,25 @@
 import 'dart:convert';
 
+import 'package:dalili_app/src/providers/http_provider.dart';
 import 'package:dalili_app/src/utils/constants.dart';
 import 'package:dalili_app/src/utils/http_request.dart';
 import 'package:dalili_app/src/widgets/global/pagination.dart';
+import 'package:dalili_app/src/widgets/global/screen_title.dart';
 import 'package:dalili_app/src/widgets/search_section/search_stores.dart';
 import 'package:dalili_app/src/widgets/search_section/store_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:http/http.dart';
+import 'package:provider/provider.dart';
 
 import '../../utils/dimentions_utils.dart' as dim;
 
 class SearchSectionBody extends StatefulWidget {
-  final String titles;
+  final String title;
   final String section;
   final List cities;
 
-  SearchSectionBody(this.cities, this.titles, this.section);
+  SearchSectionBody(this.cities, this.title, this.section);
 
   @override
   State<SearchSectionBody> createState() => _SearchSectionBodyState();
@@ -38,7 +42,7 @@ class _SearchSectionBodyState extends State<SearchSectionBody> {
     });
 
     Map<String, String> queryParams = {
-      'title': widget.titles,
+      'title': widget.title,
       'name': widget.section
     };
 
@@ -73,6 +77,8 @@ class _SearchSectionBodyState extends State<SearchSectionBody> {
       child: ListView(
         padding: const EdgeInsets.all(0),
         children: [
+          //Title
+          ScreenTitle('${widget.title} - ${widget.section}'),
           // filter select input
           Container(
             width: double.infinity,

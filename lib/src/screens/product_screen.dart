@@ -1,4 +1,5 @@
 import 'package:dalili_app/src/utils/constants.dart';
+import 'package:dalili_app/src/widgets/global/screen_title.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
@@ -37,7 +38,7 @@ class _ProductScreenState extends State<ProductScreen> {
     return Scaffold(
       body: Column(children: [
         MainBar(),
-        Header(),
+        Header(headerText: 'المنتج'),
         Container(
           height: bodyHeight(context, headerHeight: 120),
           child: FutureBuilder(
@@ -59,6 +60,7 @@ class _ProductScreenState extends State<ProductScreen> {
                 return ListView(
                   padding: const EdgeInsets.all(0),
                   children: [
+                    ScreenTitle(product['name']),
                     ProductImages(
                         wildImageUrl: mainPhotoUrl,
                         imagesUrl: photos

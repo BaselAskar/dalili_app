@@ -1,3 +1,4 @@
+import 'package:dalili_app/src/providers/auth_provider.dart';
 import 'package:dalili_app/src/providers/http_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -26,6 +27,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider.value(value: HttpProvider()),
+        ChangeNotifierProvider.value(value: Auth()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

@@ -1,4 +1,6 @@
+import 'package:dalili_app/src/providers/auth_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../utils/constants.dart';
 
@@ -15,6 +17,8 @@ class _MainBarState extends State<MainBar> {
   @override
   Widget build(BuildContext context) {
     double statusBar = MediaQuery.of(context).padding.top;
+
+    bool _isLogin = Provider.of<Auth>(context).isLogin;
 
     return Container(
       width: double.infinity,
@@ -37,19 +41,28 @@ class _MainBarState extends State<MainBar> {
               child: Image.asset('assets/images/logo.png'),
             ),
             if (widget.scaffoldKey != null)
-              Container(
-                margin: const EdgeInsets.symmetric(horizontal: 20),
-                child: IconButton(
-                  onPressed: () {
-                    widget.scaffoldKey?.currentState?.openEndDrawer();
-                  },
-                  icon: const Icon(
-                    Icons.account_box_rounded,
-                    color: Colors.blueGrey,
-                    size: 30,
+              if (!_isLogin)
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 5),
+                  child: TextButton(
+                    onPressed: () =>
+                        widget.scaffoldKey?.currentState?.openEndDrawer(),
+                    child: Row(
+                      children: [
+                        const Text(
+                          'تسجيل الدخول',
+                          style: TextStyle(color: AppColors.loginColor),
+                        ),
+                        SizedBox(width: 5),
+                        Icon(
+                          Icons.account_circle,
+                          color: AppColors.loginColor,
+                          size: 35,
+                        )
+                      ],
+                    ),
                   ),
                 ),
-              )
           ],
         ),
       ),

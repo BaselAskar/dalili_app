@@ -3,6 +3,8 @@ import 'package:dalili_app/src/utils/http_request.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
+import '../utils/dimentions_utils.dart' as dim;
+
 import '../widgets/global/main_bar.dart';
 import '../widgets/home/classifications.dart';
 import '../widgets/home/products_slides.dart';
@@ -40,12 +42,6 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double screenHeight = MediaQuery.of(context).size.height;
-    double statusbarPadding = MediaQuery.of(context).padding.top;
-    double paddingBottom = MediaQuery.of(context).padding.bottom;
-
-    double bodyHeight = screenHeight - statusbarPadding - paddingBottom - 70;
-
     return Scaffold(
       key: _scaffoldKey,
       endDrawer: Drawer(
@@ -64,7 +60,8 @@ class HomeScreen extends StatelessWidget {
             scaffoldKey: _scaffoldKey,
           ),
           Container(
-            height: bodyHeight,
+            height:
+                dim.bodyHeight(context, headerHeight: Dimentions.mainBarHeight),
             child: FutureBuilder(
               future: _getData(),
               builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -88,15 +85,11 @@ class HomeScreen extends StatelessWidget {
                   );
                 }
 
-                return AlertDialog(
-                  title: Text('Error'),
-                  content: Text('error message' as String),
-                  actions: [
-                    TextButton(
-                      onPressed: () => Navigator.of(context).pop(),
-                      child: Text('Ok'),
-                    )
-                  ],
+                return Center(
+                  child: const Text(
+                    'error...!',
+                    style: TextStyle(color: Colors.brown),
+                  ),
                 );
               },
             ),
