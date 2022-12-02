@@ -1,8 +1,9 @@
 import 'package:dalili_app/src/utils/constants.dart';
 import 'package:dalili_app/src/utils/http_request.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:provider/provider.dart';
 
+import '../providers/auth_provider.dart';
 import '../utils/dimentions_utils.dart' as dim;
 
 import '../widgets/global/main_bar.dart';
@@ -11,10 +12,18 @@ import '../widgets/home/products_slides.dart';
 import '../widgets/home/small_slides.dart';
 import '../widgets/home/wide_slides.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   static const String path = '/';
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  bool _init = false;
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  bool _isLogin = false;
 
   HttpRequest getClassifications =
       HttpRequest(url: '/api/public/classifications');
@@ -40,24 +49,53 @@ class HomeScreen extends StatelessWidget {
     };
   }
 
+  Future<void> _logout(BuildContext context) async {
+    await Provider.of<Auth>(context, listen: false).logout();
+    _scaffoldKey.currentState?.closeEndDrawer();
+    setState(() {
+      _isLogin = false;
+    });
+  }
+
+  Future<void> _isLoginRequest(BuildContext context) async {
+    bool result = await Provider.of<Auth>(context).isLogin;
+
+    setState(() {
+      _isLogin = result;
+    });
+  }
+
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    if (!_init) {
+      _isLoginRequest(context);
+      _init = true;
+    }
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      endDrawer: Drawer(
-          child: Column(
-        children: const [
-          Expanded(
-            child: Center(
-              child: Text('List'),
-            ),
-          )
-        ],
-      )),
+      endDrawer: _isLogin
+          ? Drawer(
+              child: Column(
+                children: [
+                  SizedBox(height: 100),
+                  ElevatedButton(
+                      style: ElevatedButton.styleFrom(primary: Colors.red),
+                      onPressed: () => _logout(context),
+                      child: const Text('تسجيل خروج'))
+                ],
+              ),
+            )
+          : null,
       body: Column(
         children: [
           MainBar(
-            scaffoldKey: _scaffoldKey,
+            showUser: true,
           ),
           Container(
             height:
@@ -68,7 +106,8 @@ class HomeScreen extends StatelessWidget {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Expanded(
                     child: Center(
-                      child: SpinKitDualRing(color: AppColors.primary),
+                      child:
+                          CircularProgressIndicator(color: AppColors.primary),
                     ),
                   );
                 }

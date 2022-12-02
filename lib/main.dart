@@ -1,5 +1,7 @@
 import 'package:dalili_app/src/providers/auth_provider.dart';
 import 'package:dalili_app/src/providers/http_provider.dart';
+import 'package:dalili_app/src/screens/login_screen.dart';
+import 'package:dalili_app/src/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -34,6 +36,7 @@ class MyApp extends StatelessWidget {
         title: 'Dalili',
         theme: ThemeData(
           primarySwatch: Colors.blue,
+          primaryColor: AppColors.primary,
         ),
         initialRoute: '/',
         routes: {
@@ -42,6 +45,7 @@ class MyApp extends StatelessWidget {
           StoreScreen.path: (context) => StoreScreen(),
           ProductScreen.path: (context) => ProductScreen(),
           PhotoViewScreen.path: (context) => PhotoViewScreen(),
+          LoginScreen.path: (context) => LoginScreen(),
         },
       ),
     );

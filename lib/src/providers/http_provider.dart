@@ -30,21 +30,19 @@ class HttpProvider with ChangeNotifier {
     required String url,
     Methods method = Methods.get,
     String? contentType,
-    Map<String, dynamic>? body,
     Function(dynamic error)? applyError,
     required Function applyData,
   }) {
     this.url = url;
     this.method = method;
     this.contentType = contentType;
-    this.body = body;
     this.applyError = applyError;
     this.applyData = (data) {
       print(data);
     };
   }
 
-  Future<void> sendRequest() async {
+  Future<void> sendRequest({Map<String, dynamic>? body}) async {
     if (url == null) throw new Exception("Initial request first");
 
     isLoading = true;

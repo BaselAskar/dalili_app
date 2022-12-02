@@ -60,7 +60,6 @@ class HttpRequest {
 
     var bodyArg = contentType == APPLICATION_JSON ? jsonEncode(body) : {};
 
-    // http.Response response;
     switch (method) {
       case Methods.get:
         _response = await http.get(uriArg, headers: headerArg);
@@ -80,7 +79,9 @@ class HttpRequest {
         break;
     }
 
-    if (_response?.statusCode as int >= 400) throw jsonDecode(_response!.body);
+    if (_response?.statusCode as int >= 400) {
+      throw jsonDecode(_response!.body);
+    }
 
     try {
       return jsonDecode(_response!.body);
