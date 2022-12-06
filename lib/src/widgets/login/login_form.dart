@@ -35,7 +35,7 @@ class _LoginFormState extends State<LoginForm> {
     contentType: APPLICATION_JSON,
   );
 
-  void _onSubmit(BuildContext context) {
+  void _onSubmit() {
     setState(() {
       _validUserName = null;
       _validPassword = null;
@@ -122,7 +122,7 @@ class _LoginFormState extends State<LoginForm> {
                 onSave: (value) {
                   _loginInfo['password'] = value?.trim();
                 },
-                onFieldSubmitted: (_) => _onSubmit(context),
+                onFieldSubmitted: (_) => _onSubmit(),
                 validator: (value) {
                   if (value?.trim() == '') return 'الرجاء إضافة كلمة المرور';
 
@@ -131,7 +131,7 @@ class _LoginFormState extends State<LoginForm> {
               ),
               SizedBox(height: 40),
               ElevatedButton(
-                onPressed: () => _onSubmit(context),
+                onPressed: () => _onSubmit(),
                 child: Text('تسجيل دخول', style: TextStyle(fontSize: 16)),
               ),
             ],

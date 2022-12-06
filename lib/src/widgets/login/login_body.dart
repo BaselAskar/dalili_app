@@ -69,42 +69,43 @@ class _LoginBodyState extends State<LoginBody> with TickerProviderStateMixin {
       child: Opacity(
         opacity: _opacityAnimi.value,
         child: Container(
-            height: 500,
-            margin: const EdgeInsets.symmetric(horizontal: 15),
-            decoration: BoxDecoration(
-              color: AppColors.primary75,
+          height: 500,
+          margin: const EdgeInsets.symmetric(horizontal: 15),
+          decoration: BoxDecoration(
+            color: AppColors.primary75,
+            borderRadius: BorderRadius.circular(10),
+            boxShadow: [
+              BoxShadow(
+                offset: Offset.zero,
+                color: AppColors.loginColor.withOpacity(0.4),
+                spreadRadius: 1,
+                blurRadius: 10,
+              )
+            ],
+          ),
+          child: DefaultTabController(
+            length: 2,
+            child: ClipRRect(
               borderRadius: BorderRadius.circular(10),
-              boxShadow: [
-                BoxShadow(
-                  offset: Offset.zero,
-                  color: AppColors.loginColor.withOpacity(0.4),
-                  spreadRadius: 1,
-                  blurRadius: 10,
-                )
-              ],
-            ),
-            child: DefaultTabController(
-              length: 2,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(10),
-                child: Scaffold(
-                  appBar: PreferredSize(
-                    preferredSize: Size.fromHeight(60),
-                    child: AppBar(
-                      elevation: 0,
-                      backgroundColor: AppColors.primary75,
-                      bottom: tab,
-                    ),
-                  ),
-                  body: TabBarView(
-                    children: [
-                      LoginForm(),
-                      RegisterForm(),
-                    ],
+              child: Scaffold(
+                appBar: PreferredSize(
+                  preferredSize: Size.fromHeight(60),
+                  child: AppBar(
+                    elevation: 0,
+                    backgroundColor: AppColors.primary75,
+                    bottom: tab,
                   ),
                 ),
+                body: TabBarView(
+                  children: [
+                    LoginForm(),
+                    RegisterForm(),
+                  ],
+                ),
               ),
-            )),
+            ),
+          ),
+        ),
       ),
     );
   }

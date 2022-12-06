@@ -24,14 +24,14 @@ class AverageStars extends StatelessWidget {
       }
 
       if (index == _numOffillStars && _starPercent > 0) {
-        return Stack(children: [
+        return Stack(alignment: Alignment.centerRight, children: [
           Icon(Icons.star_outline, size: starsSize),
-          Container(
-            width: starsSize * _starPercent,
-            decoration: BoxDecoration(shape: BoxShape.rectangle),
-            clipBehavior: Clip.antiAlias,
-            child: Icon(Icons.star, color: Colors.yellow, size: starsSize),
-          )
+          ClipRect(
+              child: Align(
+                  alignment: Alignment.centerRight,
+                  widthFactor: _starPercent,
+                  child:
+                      Icon(Icons.star, color: Colors.yellow, size: starsSize)))
         ]);
       }
 
@@ -41,16 +41,19 @@ class AverageStars extends StatelessWidget {
     return Container(
       child: Column(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: starsList,
+          Directionality(
+            textDirection: TextDirection.rtl,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: starsList,
+            ),
           ),
           SizedBox(height: 5),
           Center(
             child: Text(
               '$averageRating',
               style: const TextStyle(
-                  color: Color.fromARGB(255, 196, 176, 3),
+                  color: Color.fromRGBO(196, 176, 3, 1),
                   fontWeight: FontWeight.bold),
             ),
           ),

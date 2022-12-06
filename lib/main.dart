@@ -1,6 +1,7 @@
 import 'package:dalili_app/src/providers/auth_provider.dart';
 import 'package:dalili_app/src/providers/http_provider.dart';
 import 'package:dalili_app/src/screens/login_screen.dart';
+import 'package:dalili_app/src/screens/seach_screen.dart';
 import 'package:dalili_app/src/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -42,6 +43,7 @@ class MyApp extends StatelessWidget {
         routes: {
           HomeScreen.path: (context) => HomeScreen(),
           SearchSectionScreen.path: (context) => SearchSectionScreen(),
+          SearchScreen.path: (context) => SearchScreen(),
           StoreScreen.path: (context) => StoreScreen(),
           ProductScreen.path: (context) => ProductScreen(),
           PhotoViewScreen.path: (context) => PhotoViewScreen(),

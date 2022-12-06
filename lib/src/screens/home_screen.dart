@@ -1,5 +1,6 @@
 import 'package:dalili_app/src/utils/constants.dart';
 import 'package:dalili_app/src/utils/http_request.dart';
+import 'package:dalili_app/src/utils/shared_data.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -24,6 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   bool _isLogin = false;
+  String? _userPhotoUrl;
 
   HttpRequest getClassifications =
       HttpRequest(url: '/api/public/classifications');
@@ -70,6 +72,13 @@ class _HomeScreenState extends State<HomeScreen> {
     // TODO: implement didChangeDependencies
     if (!_init) {
       _isLoginRequest(context);
+      ShD.getUser().then((user) {
+        if (user != null) {
+          setState(() {
+            _userPhotoUrl = user['photoUrl'];
+          });
+        }
+      });
       _init = true;
     }
     super.didChangeDependencies();
@@ -77,17 +86,30 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double statusbar = MediaQuery.of(context).padding.top;
+
     return Scaffold(
       key: _scaffoldKey,
       endDrawer: _isLogin
           ? Drawer(
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  SizedBox(height: 100),
-                  ElevatedButton(
-                      style: ElevatedButton.styleFrom(primary: Colors.red),
-                      onPressed: () => _logout(context),
-                      child: const Text('تسجيل خروج'))
+                  if (_userPhotoUrl != null)
+                    Container(
+                      padding: EdgeInsets.only(top: statusbar + 20),
+                      child: CircleAvatar(
+                        backgroundImage: NetworkImage(_userPhotoUrl as String),
+                        radius: 60,
+                      ),
+                    ),
+                  Container(
+                    padding: const EdgeInsets.symmetric(vertical: 20),
+                    child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(primary: Colors.red),
+                        onPressed: () => _logout(context),
+                        child: const Text('تسجيل خروج')),
+                  )
                 ],
               ),
             )
