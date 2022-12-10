@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:dalili_app/src/utils/http_request.dart';
 import 'package:dalili_app/src/widgets/global/custome_futuer_builder.dart';
 import 'package:dalili_app/src/widgets/search_section/store_card.dart';
+import 'package:dalili_app/src/widgets/store/product_card.dart';
 import 'package:flutter/material.dart';
 
 import '../utils/dimentions_utils.dart' as dim;
@@ -79,7 +80,7 @@ class _SearchScreenState extends State<SearchScreen> {
           height: dim.bodyHeight(context, headerHeight: 57),
           child: _searchText == ''
               ? Center(
-                  child: Text('لا يوجد نتائج'),
+                  child: Text('أدخل اسم متجر أو منتج'),
                 )
               : CustomeFutureBuilder(
                   future: searchReq.sendRequest(query: {'search': _searchText}),
@@ -87,18 +88,33 @@ class _SearchScreenState extends State<SearchScreen> {
                     child: CircularProgressIndicator(color: AppColors.primary),
                   ),
                   successBuilder: (data) {
-                    return ListView(
-                      padding: const EdgeInsets.all(0),
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.symmetric(vertical: 20),
-                          child: Column(
-                            children: (data['stores'] as List).map((store) {
-                              return StoreCard(store);
-                            }).toList(),
+                    if ((data['stores'] as List).length > 0 ||
+                        (data['products'] as List).length > 0) {
+                      return ListView(
+                        padding: const EdgeInsets.all(0),
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.symmetric(vertical: 20),
+                            child: Column(
+                              children: (data['stores'] as List).map((store) {
+                                return StoreCard(store);
+                              }).toList(),
+                            ),
                           ),
-                        ),
-                      ],
+                          Container(
+                            child: Column(
+                              children:
+                                  (data['products'] as List).map((product) {
+                                return ProductCard(product);
+                              }).toList(),
+                            ),
+                          )
+                        ],
+                      );
+                    }
+
+                    return Center(
+                      child: Text('لا يوجد نتائج'),
                     );
                   })),
     );

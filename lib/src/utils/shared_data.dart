@@ -29,4 +29,16 @@ class ShD {
 
     await pref.clear();
   }
+
+  static Future<void> setToken(String token) async {
+    final pref = await SharedPreferences.getInstance();
+
+    final Map<String, dynamic>? user = await getUser();
+
+    if (user != null) {
+      user['token'] = token;
+
+      await pref.setString('user', jsonEncode(user));
+    }
+  }
 }

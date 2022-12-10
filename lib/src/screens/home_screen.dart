@@ -95,14 +95,15 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  if (_userPhotoUrl != null)
-                    Container(
-                      padding: EdgeInsets.only(top: statusbar + 20),
-                      child: CircleAvatar(
-                        backgroundImage: NetworkImage(_userPhotoUrl as String),
-                        radius: 60,
-                      ),
+                  Container(
+                    padding: EdgeInsets.only(top: statusbar + 20),
+                    child: CircleAvatar(
+                      backgroundImage: _userPhotoUrl != null
+                          ? NetworkImage(_userPhotoUrl as String)
+                          : Image.asset('assets/images/user.png').image,
+                      radius: 60,
                     ),
+                  ),
                   Container(
                     padding: const EdgeInsets.symmetric(vertical: 20),
                     child: ElevatedButton(

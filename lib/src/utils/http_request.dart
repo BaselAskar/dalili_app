@@ -1,25 +1,31 @@
 import 'dart:convert';
 
+import 'package:dalili_app/src/utils/shared_data.dart';
+
 import './constants.dart';
 import 'package:http/http.dart' as http;
+import './token_services.dart' as ts;
 
 enum Methods { get, post, put, delete }
+
+enum Behavior { one, multi }
 
 class HttpRequest {
   final String url;
   final Methods method;
+  final Behavior behavior;
   final String? contentType;
-  // final Object? body;
   final bool auth;
 
   HttpRequest({
     required this.url,
     this.method = Methods.get,
+    this.behavior = Behavior.multi,
     this.contentType,
-    // this.body,
     this.auth = false,
   });
 
+  bool _proccess = false;
   http.Response? _response;
 
   http.Response? get response {
@@ -31,6 +37,9 @@ class HttpRequest {
     List<String>? pathParams,
     Map<String, String>? query,
   }) async {
+    if (behavior == Behavior.one && _proccess) return;
+
+    _proccess = true;
     _response = null;
 
     pathParams = pathParams ?? [];
@@ -58,6 +67,10 @@ class HttpRequest {
     Map<String, String> headerArg =
         contentType != null ? {'Content-Type': contentType as String} : {};
 
+    if (auth) {
+      headerArg.addAll({'Authorization': await ts.getToken()});
+    }
+
     var bodyArg = contentType == APPLICATION_JSON ? jsonEncode(body) : {};
 
     switch (method) {
@@ -79,14 +92,25 @@ class HttpRequest {
         break;
     }
 
-    if (_response?.statusCode as int >= 400) {
-      throw jsonDecode(_response!.body);
+    if (_response == null || _response!.statusCode >= 400) {
+      _proccess = false;
+      throw _response != null
+          ? jsonDecode(_response!.body)
+          : 'There is error occurding request';
     }
 
+    if (auth) {
+      ts.refreshToken(response!);
+    }
+
+    dynamic result;
     try {
-      return jsonDecode(_response!.body);
+      result = jsonDecode(_response!.body);
     } catch (ex) {
-      throw 'error Request';
+      result = _response!.body;
+    } finally {
+      _proccess = false;
+      return result;
     }
   }
 }
