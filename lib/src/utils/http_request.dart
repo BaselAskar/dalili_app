@@ -32,6 +32,10 @@ class HttpRequest {
     return this._response;
   }
 
+  bool get wating {
+    return _proccess;
+  }
+
   Future sendRequest({
     Object? body,
     List<String>? pathParams,

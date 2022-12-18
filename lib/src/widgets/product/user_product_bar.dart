@@ -5,8 +5,10 @@ import 'package:flutter/material.dart';
 class UserProductBar extends StatelessWidget {
   final bool isLike;
   final String productId;
+  final int userRating;
 
-  UserProductBar({this.isLike = false, this.productId = ''});
+  UserProductBar(
+      {this.isLike = false, this.productId = '', this.userRating = 0});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +18,10 @@ class UserProductBar extends StatelessWidget {
           child: Row(
         children: [
           LikeButton(isLike, productId),
-          RatingProduct(),
+          RatingProduct(
+            userRating: userRating,
+            productId: productId,
+          ),
         ],
       )),
     );

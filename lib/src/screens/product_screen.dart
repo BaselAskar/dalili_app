@@ -24,7 +24,8 @@ class ProductScreen extends StatefulWidget {
 }
 
 class _ProductScreenState extends State<ProductScreen> {
-  HttpRequest getProduct = HttpRequest(url: '/api/public/get-product');
+  HttpRequest getProduct =
+      HttpRequest(url: '/api/public/get-product', auth: true);
   bool _init = false;
 
   //States
@@ -106,6 +107,7 @@ class _ProductScreenState extends State<ProductScreen> {
                       UserProductBar(
                         isLike: isLikedProduct,
                         productId: productId,
+                        userRating: product['userRating'],
                       ),
                     ProductDetails(product),
                     const SizedBox(

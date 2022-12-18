@@ -24,6 +24,8 @@ class Grid extends StatelessWidget {
         children: List.generate(numOfRows, (indexRow) {
           return Row(
             children: List.generate(numOfCol, (indexCol) {
+              final int index = (numOfCol * indexRow) + indexCol;
+
               return Container(
                 padding: EdgeInsets.only(
                     left: indexCol != 0 ? mainAxisSpeacing / 2 : 0,
@@ -32,7 +34,7 @@ class Grid extends StatelessWidget {
                     bottom:
                         indexRow != numOfRows - 1 ? mainAxisSpeacing / 2 : 0),
                 width: (constraints.maxWidth / numOfCol),
-                child: children[(numOfCol * indexRow) + indexCol],
+                child: index < children.length ? children[index] : Container(),
               );
             }),
           );
