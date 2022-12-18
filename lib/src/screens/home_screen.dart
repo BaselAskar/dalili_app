@@ -1,6 +1,7 @@
 import 'package:dalili_app/src/utils/constants.dart';
 import 'package:dalili_app/src/utils/http_request.dart';
 import 'package:dalili_app/src/utils/shared_data.dart';
+import 'package:dalili_app/src/widgets/home/main_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -90,31 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
       key: _scaffoldKey,
-      endDrawer: _isLogin
-          ? Drawer(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    padding: EdgeInsets.only(top: statusbar + 20),
-                    child: CircleAvatar(
-                      backgroundImage: _userPhotoUrl != null
-                          ? NetworkImage(_userPhotoUrl as String)
-                          : Image.asset('assets/images/user.png').image,
-                      radius: 60,
-                    ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(vertical: 20),
-                    child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(primary: Colors.red),
-                        onPressed: () => _logout(context),
-                        child: const Text('تسجيل خروج')),
-                  )
-                ],
-              ),
-            )
-          : null,
+      endDrawer: _isLogin ? MainDrawer(_userPhotoUrl, _logout) : null,
       body: Column(
         children: [
           MainBar(
