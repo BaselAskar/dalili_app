@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 
-import '../global/average_starts.dart';
-
 class AverageStars extends StatelessWidget {
   final double starsSize;
   final double averageRating;
+  final bool hideValue;
 
-  AverageStars({required this.starsSize, required this.averageRating});
+  AverageStars({
+    required this.starsSize,
+    required this.averageRating,
+    this.hideValue = false,
+  });
 
   int get _numOffillStars {
     return averageRating.floor();
@@ -49,14 +52,15 @@ class AverageStars extends StatelessWidget {
             ),
           ),
           SizedBox(height: 5),
-          Center(
-            child: Text(
-              '$averageRating',
-              style: const TextStyle(
-                  color: Color.fromRGBO(196, 176, 3, 1),
-                  fontWeight: FontWeight.bold),
+          if (!hideValue)
+            Center(
+              child: Text(
+                '$averageRating',
+                style: const TextStyle(
+                    color: Color.fromRGBO(196, 176, 3, 1),
+                    fontWeight: FontWeight.bold),
+              ),
             ),
-          ),
         ],
       ),
     );

@@ -1,14 +1,9 @@
-import 'dart:math';
-
 import 'package:dalili_app/src/utils/shared_data.dart';
 import 'package:flutter/material.dart';
 import 'package:dalili_app/src/utils/constants.dart';
 import 'package:dalili_app/src/utils/http_request.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class Auth with ChangeNotifier {
-  Map<String, String?> _user = {};
-
   String? _token;
 
   HttpRequest _loginReq = HttpRequest(

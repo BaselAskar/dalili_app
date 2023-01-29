@@ -2,6 +2,7 @@ import 'package:dalili_app/src/providers/auth_provider.dart';
 import 'package:dalili_app/src/utils/constants.dart';
 import 'package:dalili_app/src/utils/shared_data.dart';
 import 'package:dalili_app/src/widgets/global/screen_title.dart';
+import 'package:dalili_app/src/widgets/product/comments.dart';
 import 'package:dalili_app/src/widgets/product/user_product_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -29,8 +30,6 @@ class _ProductScreenState extends State<ProductScreen> {
   bool _init = false;
 
   //States
-  String _wildImageUrl = '';
-  List<String> _imagesUrl = [];
   bool _isLogin = false;
   Map? _currentUser = null;
 
@@ -42,11 +41,6 @@ class _ProductScreenState extends State<ProductScreen> {
   @override
   void didChangeDependencies() {
     if (!_init) {
-      // Provider.of<Auth>(context).isLogin.then((value) {
-      //   setState(() {
-      //     _isLogin = value;
-      //   });
-      // });
       ShD.getUser().then((result) {
         if (result != null) {
           setState(() {
@@ -91,8 +85,6 @@ class _ProductScreenState extends State<ProductScreen> {
                 photos.sort((ph1, ph2) =>
                     ph1['isMain'].hashCode.compareTo(ph2['isMain'].hashCode));
 
-                print(photos);
-
                 return ListView(
                   padding: const EdgeInsets.all(0),
                   children: [
@@ -112,7 +104,10 @@ class _ProductScreenState extends State<ProductScreen> {
                     ProductDetails(product),
                     const SizedBox(
                       height: 20,
-                    )
+                    ),
+                    Comments(
+                      productId: productId,
+                    ),
                   ],
                 );
               }

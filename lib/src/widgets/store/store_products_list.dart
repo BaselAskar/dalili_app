@@ -37,8 +37,6 @@ class _StoreProductsListState extends State<StoreProductsList> {
   HttpRequest getStoreProducts =
       HttpRequest(url: '/api/public/get-store-products');
 
-  HttpRequest getStoreClssifications = HttpRequest(url: '/api/public/get-');
-
   //Methods
   Future<void> _getProducts({required String section}) async {
     List data = [];
@@ -119,14 +117,27 @@ class _StoreProductsListState extends State<StoreProductsList> {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 10),
             child: Pagination(
-              getItmesRequest: (context, pageNumber, pageSize) =>
-                  getStoreProducts.sendRequest(
-                query: {
+              getItmesRequest: (context, pageNumber, pageSize) {
+                if (_dropdownValue == 'الكل') {
+                  return getStoreProducts.sendRequest(query: {
+                    'storeId': widget.storeId,
+                    'pageNumber': pageNumber,
+                    'pageSize': pageSize,
+                  });
+                }
+
+                String title =
+                    _dropdownValue!.substring(0, _dropdownValue!.indexOf('-'));
+                String name =
+                    _dropdownValue!.substring(_dropdownValue!.indexOf('-') + 1);
+                return getStoreProducts.sendRequest(query: {
                   'storeId': widget.storeId,
                   'pageNumber': pageNumber,
                   'pageSize': pageSize,
-                },
-              ),
+                  'title': title,
+                  'name': name
+                });
+              },
               initialList: _productsList,
               itemsBuilder: (context, listData, index) {
                 return Padding(

@@ -1,7 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter_launcher_icons/main.dart';
-
 import '../utils/constants.dart';
 import 'package:flutter/material.dart';
 

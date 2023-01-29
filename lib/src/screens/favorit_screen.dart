@@ -1,6 +1,5 @@
 import 'package:dalili_app/src/utils/constants.dart';
 import 'package:dalili_app/src/utils/http_request.dart';
-import 'package:dalili_app/src/widgets/global/body_view.dart';
 import 'package:dalili_app/src/widgets/global/custome_futuer_builder.dart';
 import 'package:dalili_app/src/widgets/global/header.dart';
 import 'package:dalili_app/src/widgets/global/main_bar.dart';

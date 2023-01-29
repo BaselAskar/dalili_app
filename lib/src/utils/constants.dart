@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-const String BASE_API = 'https://dalilisy.azurewebsites.net/';
+const String BASE_API = 'http://basekaskar-001-site1.atempurl.com';
 const String APPLICATION_JSON = 'application/json';
 
 class Dimentions {

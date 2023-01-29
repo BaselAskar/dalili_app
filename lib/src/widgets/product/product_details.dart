@@ -1,5 +1,5 @@
 import 'package:dalili_app/src/utils/constants.dart';
-import 'package:dalili_app/src/widgets/global/average_starts.dart';
+import 'package:dalili_app/src/widgets/global/average_start.dart';
 import 'package:flutter/material.dart';
 
 import '../../utils/dimentions_utils.dart';

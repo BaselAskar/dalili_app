@@ -1,7 +1,7 @@
 import 'package:dalili_app/src/utils/constants.dart';
 import 'package:flutter/material.dart';
 
-import '../global/average_starts.dart';
+import '../global/average_start.dart';
 import '../../screens/product_screen.dart';
 
 class ProductCard extends StatelessWidget {
